@@ -13,6 +13,4 @@ def test_class_time():
     short = time_range("2019-10-31 10:05:00", "2019-10-31 12:55:00", 3, 600)
     print(overlap_time(large, short))
     result = overlap_time(large, short) 
-    expected = [('2019-10-31 10:05:00', '2019-10-31 10:55:00'), ('2019-10-31 11:05:00', '2019-10-31 11:55:00'),
-                ('2019-10-31 12:05:00', '2019-10-31 12:55:00')]
-    assert result == expected
+    assert result == short
