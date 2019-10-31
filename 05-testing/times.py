@@ -23,8 +23,14 @@ def overlap_time(obs1, obs2):
             ot.append((low, high))
     return ot
 
-
+def time_interval(t1,t2):
+    t1 = datetime.datetime.strptime(t1, "%Y-%m-%d %H:%M:%S")
+    t2 = datetime.datetime.strptime(t2, "%Y-%m-%d %H:%M:%S")
+    return (t2-t1).total_seconds()
+        
+        
 if __name__ == "__main__":
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
     short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
     print(overlap_time(large, short))
+    
