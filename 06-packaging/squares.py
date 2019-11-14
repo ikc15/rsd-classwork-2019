@@ -1,5 +1,5 @@
 """Computation of weighted average of squares."""
-
+from argparse import ArgumentParser
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
     """
@@ -28,7 +28,7 @@ def average_of_squares(list_of_numbers, list_of_weights=None):
         for number, weight
         in zip(list_of_numbers, effective_weights)
     ]
-    return sum(squares)
+    return sum(squares)/len(list_of_numbers)
 
 
 def convert_numbers(list_of_strings):
@@ -38,7 +38,7 @@ def convert_numbers(list_of_strings):
     Example:
     -------
     >>> convert_numbers(["4", " 8 ", "15 16", " 23    42 "])
-    [4, 8, 15, 16]
+    [4.0, 8.0, 15.0, 16.0, 23.0, 42.0]
     """
     all_numbers = []
     for s in list_of_strings:
@@ -50,14 +50,20 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    with open("numbers.txt", "r") as numbers_file:
-        numbers_strings = numbers_file.readlines()
-    # TODO Can we make this optional, so that we don't need a weights file?
-    with open("weights.txt", "r") as weights_file:
-        weight_strings = weights_file.readlines()
-    numbers = convert_numbers(numbers_strings)
-    weights = convert_numbers(weight_strings)
-    # TODO Can we add the option of computing the square root of this result?
-    result = average_of_squares(numbers, weights)
-    # TODO Can we write the result in a file instead of printing it?
-    print(result)
+	parser = ArgumentParser(description="Filename")
+	parser.add_argument('numbers')
+	parser.add_argument('weights')
+	arguments = parser.parse_args()
+	with open(arguments.numbers, "r") as numbers_file:
+		numbers_strings = numbers_file.readlines()
+	# TODO Can we make this optional, so that we don't need a weights file?
+	with open(arguments.weights, "r") as weights_file:
+	    weight_strings = weights_file.readlines()
+	numbers = convert_numbers(numbers_strings)
+	weights = convert_numbers(weight_strings)
+	# TODO Can we add the option of computing the square root of this result?
+	result = average_of_squares(numbers, weights)
+	# TODO Can we write the result in a file instead of printing it?
+	results_file = open('results_file.txt', 'w')
+	results_file.write(result)
+	print(result)
